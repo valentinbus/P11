@@ -14,6 +14,7 @@ from .forms import SearchForm
 
 from pprint import pformat
 import logging
+import json
 
 
 logging.basicConfig(level=logging.DEBUG)
@@ -108,6 +109,21 @@ def search_product(request):
         )
     else:
         return render(request, "op/search_product.html", locals())
+
+
+def autocompleteModel(request):
+    if request.is_ajax() is False:
+        q = request.GET.get('term').capitalize()
+        search_qs = Product.objects.filter(name__startswith=q)
+        results = []
+        print(q)
+        for r in search_qs:
+            results.append(r.name)
+        data = json.dumps(results)
+    else:
+        data = 'fail'
+    mimetype = 'application/json'
+    return HttpResponse(data, mimetype)
 
 
 @login_required(login_url="/connexion")
