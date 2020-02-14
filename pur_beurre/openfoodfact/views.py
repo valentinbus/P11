@@ -78,7 +78,7 @@ def search_product(request):
     Comment utiliser une fonctionnolité
     d'openfoodfact si je ne peux pas l'importer
     """
-    q = request.GET.get("query", "pizza")
+    q = request.GET.get("query")
 
     if q:
         product_list = list()
