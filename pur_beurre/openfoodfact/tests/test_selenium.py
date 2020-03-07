@@ -44,6 +44,14 @@ class OpenfoodfactViewstest(unittest.TestCase):
         self.driver.find_element_by_id("save_substitut_button").click()
         self.assertIn("http://127.0.0.1:8000/connexion/?next=/openfoodfact/save_replacement/%3Fid_product_to_replace%3D4894%26id_replace_product%3D4892", self.driver.current_url)
 
+    def test_autocompletion(self): 
+        self.driver.get("http://127.0.0.1:8000/openfoodfact/search_product/")
+        self.driver.find_element_by_id("search_product_home").send_keys("pizza")
+        time.sleep(5)
+        element = self.driver.find_element_by_class_name("ui-corner-all")
+        self.assertEquals(True, element.is_displayed())
+
+
     def tearDown(self):
         self.driver.quit
 
