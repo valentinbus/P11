@@ -208,3 +208,15 @@ class ViewsTest(TestCase):
         assert mail.outbox[0].body == 'Here is the message.'
         assert mail.outbox[0].from_email == 'from@example.com'
         assert mail.outbox[0].to == ['to@example.com']
+
+    def test_autocompletion(self):
+        """
+        Test for autocompletion feature
+        """
+        response = client.get(
+            reverse('search_product'),
+            {'q': 'pizza'}, 
+            headers=[('X-Requested-With', 'XMLHttpRequest')]
+        )
+        print('youpi')
+        self.assertEquals(response.status_code, 200)
